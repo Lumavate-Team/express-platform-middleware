@@ -17,18 +17,27 @@ const resolveParams = (req, path) => {
   return parts.join('/')
 }
 
-const makeSignedRequest = function ({ route, method = 'get', shapeData } = {}) {
+const makeSignedRequest = function ({ route, method = 'get', shapeData, payload } = {}) {
   return async (req, res, next) => {
     const resolvedPath = resolveParams(req, route)
+
     const signedPath = await signUrl({
       method: method,
-      path: resolvedPath
+      path: resolvedPath,
+      body: payload
     })
 
-    const axRes = await axios.get(`${process.env.BASE_URL}${signedPath}`, {
+    const config = {
+      method: method,
+      url: `${process.env.BASE_URL}${signedPath}`,
       headers: res.locals.authHeader
-    })
+    }
 
+    if (payload) {
+      config.data = payload
+    }
+
+    const axRes = await axios(config)
     const data = res.locals.platformData = shapeData
       ? shapeData(axRes)
       : axRes.data.payload.data
@@ -45,9 +54,9 @@ export const platformRequest = {
   get (route, shapeData) {
     return makeSignedRequest({ route, shapeData })
   },
-  post (route, shapeData) {
+  post (route, payload, shapeData) {
     const method = 'post'
 
-    return makeSignedRequest({ route, method, shapeData })
+    return makeSignedRequest({ route, method, shapeData, payload })
   }
 }
