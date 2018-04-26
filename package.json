@@ -1,6 +1,6 @@
 {
   "name": "@lumavate/express-platform-middleware",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "build/main.js",
   "files": [
@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/Lumavate-Team/express-platform-middleware#readme",
   "dependencies": {
-    "@lumavate/request-signer": "^0.1.8",
-    "express": "^4.16.2",
-    "axios": "^0.17.1"
+    "@lumavate/request-signer": "^0.1.9",
+    "axios": "^0.17.1",
+    "express": "^4.16.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

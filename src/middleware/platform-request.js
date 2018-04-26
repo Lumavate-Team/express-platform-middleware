@@ -54,8 +54,18 @@ export const platformRequest = {
   get (route, shapeData) {
     return makeSignedRequest({ route, shapeData })
   },
+  delete (route, shapeData) {
+    const method = 'delete'
+
+    return makeSignedRequest({ route, method, shapeData })
+  },
   post (route, payload, shapeData) {
     const method = 'post'
+
+    return makeSignedRequest({ route, method, shapeData, payload })
+  },
+  put (route, payload, shapeData) {
+    const method = 'put'
 
     return makeSignedRequest({ route, method, shapeData, payload })
   }
